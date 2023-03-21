@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{categories.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{categories.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/categoriess/add}" th:text="#{categories.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${categoriess.empty}" th:text="#{categories.list.empty}" />
+            <div th:if="${!categoriess.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{categories.id.label}" scope="col" />
+                            <th th:text="#{categories.name.label}" scope="col" />
+                            <th th:text="#{categories.description.label}" scope="col" />
+                            <th th:text="#{categories.isActive.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="categories : ${categoriess}">
+                            <td th:text="${categories.id}" />
+                            <td th:text="${categories.name}" />
+                            <td th:text="${categories.description}" />
+                            <td th:text="${categories.isActive}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/categoriess/edit/{id}(id=${categories.id})}" th:text="#{categories.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/categoriess/delete/{id}(id=${categories.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{categories.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

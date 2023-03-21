@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{brands.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{brands.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/brandss/add}" th:text="#{brands.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${brandss.empty}" th:text="#{brands.list.empty}" />
+            <div th:if="${!brandss.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{brands.id.label}" scope="col" />
+                            <th th:text="#{brands.name.label}" scope="col" />
+                            <th th:text="#{brands.description.label}" scope="col" />
+                            <th th:text="#{brands.isactive.label}" scope="col" />
+                            <th th:text="#{brands.categoryid.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="brands : ${brandss}">
+                            <td th:text="${brands.id}" />
+                            <td th:text="${brands.name}" />
+                            <td th:text="${brands.description}" />
+                            <td th:text="${brands.isactive}" />
+                            <td th:text="${brands.categoryid}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/brandss/edit/{id}(id=${brands.id})}" th:text="#{brands.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/brandss/delete/{id}(id=${brands.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{brands.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

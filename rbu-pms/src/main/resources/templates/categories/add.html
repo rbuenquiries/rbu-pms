@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{categories.add.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{categories.add.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/categoriess}" th:text="#{categories.add.back}" class="btn btn-secondary" />
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('categories')}" />
+            <form th:action="${T(com.rbu.pms.rbu_pms.util.WebUtils).getRequest().requestURI}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='categories', field='name')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='categories', field='description')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='categories', field='isActive', type='checkbox')}" />
+                <input type="submit" th:value="#{categories.add.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{offers.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{offers.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/offerss/add}" th:text="#{offers.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${offerss.empty}" th:text="#{offers.list.empty}" />
+            <div th:if="${!offerss.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{offers.id.label}" scope="col" />
+                            <th th:text="#{offers.offername.label}" scope="col" />
+                            <th th:text="#{offers.expdate.label}" scope="col" />
+                            <th th:text="#{offers.couponcode.label}" scope="col" />
+                            <th th:text="#{offers.percentage.label}" scope="col" />
+                            <th th:text="#{offers.maximum.label}" scope="col" />
+                            <th th:text="#{offers.itemid.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="offers : ${offerss}">
+                            <td th:text="${offers.id}" />
+                            <td th:text="${offers.offername}" />
+                            <td th:text="${offers.expdate}" />
+                            <td th:text="${offers.couponcode}" />
+                            <td th:text="${offers.percentage}" />
+                            <td th:text="${offers.maximum}" />
+                            <td th:text="${offers.itemid}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/offerss/edit/{id}(id=${offers.id})}" th:text="#{offers.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/offerss/delete/{id}(id=${offers.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{offers.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

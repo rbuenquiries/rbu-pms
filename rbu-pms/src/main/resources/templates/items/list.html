@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{items.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{items.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/itemss/add}" th:text="#{items.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${itemss.empty}" th:text="#{items.list.empty}" />
+            <div th:if="${!itemss.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{items.id.label}" scope="col" />
+                            <th th:text="#{items.name.label}" scope="col" />
+                            <th th:text="#{items.code.label}" scope="col" />
+                            <th th:text="#{items.price.label}" scope="col" />
+                            <th th:text="#{items.description.label}" scope="col" />
+                            <th th:text="#{items.color.label}" scope="col" />
+                            <th th:text="#{items.weight.label}" scope="col" />
+                            <th th:text="#{items.isactive.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="items : ${itemss}">
+                            <td th:text="${items.id}" />
+                            <td th:text="${items.name}" />
+                            <td th:text="${items.code}" />
+                            <td th:text="${items.price}" />
+                            <td th:text="${items.description}" />
+                            <td th:text="${items.color}" />
+                            <td th:text="${items.weight}" />
+                            <td th:text="${items.isactive}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/itemss/edit/{id}(id=${items.id})}" th:text="#{items.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/itemss/delete/{id}(id=${items.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{items.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
